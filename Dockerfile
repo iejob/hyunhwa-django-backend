@@ -12,10 +12,10 @@ ENV PYTHONUNBUFFERED 1
 COPY ./requirements.txt /tmp/requirements.txt
 COPY ./requirements.dev.txt /tmp/requirements.dev.txt
 # 애플리케이션 파일을 컨테이너의 /app 폴더로 복사
-# COPY ./app /app
+COPY ./app /app
 
 # 작업 디렉토리를 /app으로 설정
-# WORKDIR /app
+WORKDIR /app
 
 # 컨테이너가 8000번 포트 열어서 사용
 EXPOSE 8000
@@ -29,9 +29,9 @@ RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
     /py/bin/pip install -r /tmp/requirements.txt && \
     # DEV가 true일 경우, 추가 패키지 설치
-    # if [ $DEV = "true" ]; \
-    #     then /py/bin/pip install -r /tmp/requirements.dev.txt ; \
-    # fi && \
+    if [ $DEV = "true" ]; \
+        then /py/bin/pip install -r /tmp/requirements.dev.txt ; \
+    fi && \
     # 임시 파일 삭제
     rm -rf /tmp && \
     # django-user라는 이름의 사용자 생성
