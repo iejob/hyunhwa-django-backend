@@ -21,7 +21,7 @@ WORKDIR /app
 EXPOSE 8000
 
 # DEV 환경 변수 설정, 기본값은 false
-# ARG DEV=false
+ARG DEV=false
 
 # 가상 환경 생성 후 pip 업데이트, 패키지 설치
 # DEV가 true일 경우 추가 패키지도 설치
