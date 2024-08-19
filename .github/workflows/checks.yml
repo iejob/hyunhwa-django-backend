@@ -23,11 +23,11 @@ jobs:                                                                         # 
 
             # 테스트 코드 실행하는 단계
             - name: Test                                                      # 단계 이름
-              run: docker-compose run --rm app sh -c "python manage.py test"  # Docker Compose로 테스트 실행
+              run: docker compose run --rm app sh -c "python manage.py test"  # Docker Compose로 테스트 실행
 
             # 코드 스타일 검사하는 단계
             - name: Lint(Flake8)                                              # 단계 이름
-              run: docker-compose run --rm app sh -c "flake8"                 # Docker Compose로 flake8 실행
+              run: docker compose run --rm app sh -c "flake8"                 # Docker Compose로 flake8 실행
 
 
 # jenkins
