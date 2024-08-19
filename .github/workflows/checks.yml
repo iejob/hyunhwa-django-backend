@@ -1,0 +1,34 @@
+# Github Actions CI/CD 설정 파일
+---
+name: Checks                                                                  # 워크플로 이름 정의
+
+on: [push]                                                                    # push 이벤트 발생 시 워크플로 실행 = trigger
+
+jobs:                                                                         # 실행할 작업 정의 (실행 workflow management)
+    test-lint:                                                                # 작업 이름 정의
+        name: Test and Lint                                                   # 작업의 이름
+        runs-on: ubuntu-20.04                                                 # 작업 실행 환경 설정 (Ubuntu 20.04 사용)
+        steps:                                                                # 작업 단계 정의
+            # 도커 허브에 로그인하는 단계
+            - name: Login in to Docker Hub                                    # 단계 이름
+              uses: docker/login-action@v1                                    # Docker 로그인 액션 사용
+
+              with:                                                           # 액션에 필요한 인자 설정
+                  username: ${{ secrets.DOCKERHUB_USER }}                     # Docker Hub 사용자 이름 가져오기
+                  password: ${{ secrets.DOCKERHUB_TOKEN }}                    # Docker Hub 토큰 가져오기
+
+            # GitHub 레포지토리에서 코드를 가져오는 단계
+            - name: Checkout                                                  # 단계 이름
+              uses: actions/checkout@v2                                       # Checkout 액션 사용
+
+            # 테스트 코드 실행하는 단계
+            - name: Test                                                      # 단계 이름
+              run: docker-compose run --rm app sh -c "python manage.py test"  # Docker Compose로 테스트 실행
+
+            # 코드 스타일 검사하는 단계
+            - name: Lint(Flake8)                                              # 단계 이름
+              run: docker-compose run --rm app sh -c "flake8"                 # Docker Compose로 flake8 실행
+
+
+# jenkins
+# github actions => 설치 필요 X (무료)
