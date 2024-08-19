@@ -19,4 +19,12 @@ MLOps Basic
 > docker-compose run --rm app sh -c "django-admin startproject app ."
 
 
-### 
+### Admin 계정 생성
+> docker-compose run --rm app sh -c "python manage.py migrate"
+> docker-compose run --rm app sh -c "python manage.py createsuperuser"
+
+
+### Git push
+> git add .
+> git commit -m "Django Settings"
+> git push origin main
